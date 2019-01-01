@@ -26,7 +26,9 @@ $(document).ready(function () {
     
     });
 
-    $('.clockpicker').clockpicker();
+    $('.clockpicker').clockpicker({
+        donetext: 'Done'
+    });
   });
                             
                             
