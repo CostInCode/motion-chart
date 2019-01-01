@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="node_modules/daterangepicker/daterangepicker.css" />
+        <link rel="stylesheet" href="node_modules/clockpicker/dist/jquery-clockpicker.min.css">
+        <link rel="stylesheet" href="style.css">
+        <title>Motion Chart</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="page-header">
+                    <h1 class="text-center">Motion Log Chart</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 pink" title="Settings">
+                    <div class="row" id="reportrange">
+                        <i class="fa fa-calendar"></i>&nbsp;
+                        <span></span> <i class="fa fa-caret-down"></i>
+                    </div>     
+                      <div class="input-group clockpicker">
+                            <input type="text" class="form-control" value="09:30">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </span>
+                        </div>
+                        
+                    
+                </div>
+                <div class="col-lg-9 aqua">CHART</div>
+            </div>
+        </div> <!-- end container -->
+          
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="node_modules/moment/min/moment.min.js"></script>
+        <script src="node_modules/daterangepicker/daterangepicker.js"></script>
+        <script src="node_modules/clockpicker/dist/jquery-clockpicker.min.js"></script>
+        <script src="datetimepicker.js"></script>
+        <script src="node_modules/chart.js/dist/Chart.min.js"></script>
+        <script src="chart.js"></script>
+    </body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "chartsjs-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^3.4.0",
+    "chart.js": "^2.7.3",
+    "clockpicker": "0.0.7",
+    "daterangepicker": "^3.0.3",
+    "jquery": "^3.3.1"
+  }
+}

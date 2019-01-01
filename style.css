@@ -1,0 +1,15 @@
+.pink {
+    background-color: pink;
+    border: 1px solid purple;
+}
+.aqua {
+    background-color: aquamarine
+}
+
+#reportrange {
+    background: #fff; 
+    cursor: pointer; 
+    padding: 5px 10px; 
+    border: 1px solid #ccc; 
+    width: 100%;
+}
