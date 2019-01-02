@@ -23,11 +23,18 @@ $(document).ready(function () {
         }, cb);
     
         cb(start, end);
-    
+          
     });
 
     $('.clockpicker').clockpicker({
         donetext: 'Done'
+    });
+
+    $('#startBtn').click(function(){
+        var startDate = $('#reportrange').data('daterangepicker').startDate;
+       console.log("day: "+startDate._d.getDate());
+       console.log("month: "+startDate._d.getMonth());
+       console.log("year: "+startDate._d.getFullYear());
     });
   });
                             
