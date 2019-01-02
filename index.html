@@ -34,10 +34,18 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-lg-push-1 bee">
-                    <button type="button" class="btn btn-primary" id="startBtn">Start</button>
+                    <button type="button" class="btn btn-primary" id="hourBtn">Hourly</button>
+                    <button type="button" class="btn btn-primary" id="dateBtn">Daily</button>
                 </div>
             </div> <!-- end of settings row -->
-            <div class="row aqua">CHART</div>
+            <div class="row aqua">
+                <!-- APEX
+                <div class="container">
+                    <div id="chart"></div>
+                </div> APEX -->
+                <!--CHARTS.JS-->
+                <canvas id="myChart"></canvas>
+            </div>
         </div> <!-- end container -->
           
         <script src="node_modules/jquery/dist/jquery.min.js"></script>
@@ -47,6 +55,6 @@
         <script src="node_modules/clockpicker/dist/jquery-clockpicker.min.js"></script>
         <script src="datetimepicker.js"></script>
         <script src="node_modules/chart.js/dist/Chart.min.js"></script>
-        <script src="chart.js"></script>
+        
     </body>
 </html>
