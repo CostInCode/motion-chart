@@ -63,26 +63,43 @@ $(document).ready(function () {
     const startDate = $('#reportrange').data('daterangepicker').startDate;
     const endDate = $('#reportrange').data('daterangepicker').endDate;
     const y1 = startDate._d.getFullYear(),
-    m1 = startDate._d.getMonth()+1,
-    d1 = startDate._d.getDate(),
-    y2 = endDate._d.getFullYear(),
-    m2 = endDate._d.getMonth()+1,
-    d2 = endDate._d.getDate();
-
-    let url = new URL("127.0.0.1:3000//dates"),
+          m1 = startDate._d.getMonth(),
+          d1 = startDate._d.getDate(),
+          y2 = endDate._d.getFullYear(),
+          m2 = endDate._d.getMonth(),
+          d2 = endDate._d.getDate();
+    
+   /* const labelDays = getDates(startDate, endDate);
+    console.log(labelDays);*/
+    let dates = getDates(new Date(y1, m1, d1), new Date(y2, m2, d2));
+	let arrayDates = [];
+	dates.forEach(date => {
+        const month = date.getMonth()+1,
+              day = date.getDate();
+        const ddmm = day + "/" + month;
+        arrayDates.push(ddmm);
+    });
+    let url = new URL("http://127.0.0.1:3000/dates"),
         params = {fromYear: y1, fromMonth: m1, fromDay: d1,
                     toYear: y2, toMonth: m2, toDay: d2};
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
 
-    //const url = 'http://127.0.0.1:3000/motions/' + y + '/' + m + '/' + d;
     fetch(url)
     .then((res) => res.json())
     .then((motions) => {
         let dataChart = [];
-        let labelDays = [];
         
-        
-        createChart(labelDays, dataChart);
+        for(let i = 0; i < arrayDates.length; i++) {
+            const d = arrayDates[i];
+            console.log("d: "+d);
+            const dayStr = d.substr(0, d.indexOf('/'));
+            console.log("dayStr: "+dayStr);
+            const index = motions.findIndex(x => x.day == dayStr);
+            if(index > -1) dataChart.push(motions[index].count);
+            else dataChart.push(0);
+        }
+       
+       createChart(arrayDates, dataChart);
    })
 });
 
@@ -126,7 +143,7 @@ const createChart = (mylabels, mydata) => {
         },
         layout:{
         padding:{
-            left:50,
+            left:0,
             right:0,
             bottom:0,
             top:0
@@ -140,3 +157,18 @@ const createChart = (mylabels, mydata) => {
 
 }
 
+Date.prototype.addDays = function(days) {
+    let date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
+const getDates = (startDate, stopDate) => {
+    let dateArray = [];
+    let currentDate = startDate;
+    while (currentDate <= stopDate) {
+        dateArray.push(new Date(currentDate));
+        currentDate = currentDate.addDays(1);
+    }
+    return dateArray;
+}
