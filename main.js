@@ -55,8 +55,8 @@ $(document).ready(function () {
                  if(index > -1) dataChart.push(motions[index].count);
                  else dataChart.push(0);
             }
-            
-            createChart(labels, dataChart);
+            const chartTitle = 'Motions per minute';
+            createChart(labels, dataChart, chartTitle);
        })
     })
 
@@ -80,7 +80,8 @@ $(document).ready(function () {
                  else dataChart.push(0);
                  labelsH.push(i.toString());
              }
-             createChart(labelsH, dataChart);
+             const chartTitle = 'Motions per hour';
+             createChart(labelsH, dataChart, chartTitle);
        })
   });
 
@@ -98,8 +99,7 @@ $(document).ready(function () {
           m2 = endDate._d.getMonth(),
           d2 = endDate._d.getDate();
     
-   /* const labelDays = getDates(startDate, endDate);
-    console.log(labelDays);*/
+    
     let dates = getDates(new Date(y1, m1, d1), new Date(y2, m2, d2));
 	let arrayDates = [];
 	dates.forEach(date => {
@@ -127,32 +127,35 @@ $(document).ready(function () {
             if(index > -1) dataChart.push(motions[index].count);
             else dataChart.push(0);
         }
-       
-       createChart(arrayDates, dataChart);
+       const chartTitle = 'Motions by day';
+       createChart(arrayDates, dataChart, chartTitle);
    })
 });
 
 });
 
 
-const createChart = (mylabels, mydata) => {
+const createChart = (mylabels, mydata, chartTitle) => {
     let myChart = document.getElementById('myChart').getContext('2d');
 
     // Global Options
     Chart.defaults.global.defaultFontFamily = 'Lato';
-    Chart.defaults.global.defaultFontSize = 18;
+    //Chart.defaults.global.defaultFontSize = 18;
     Chart.defaults.global.defaultFontColor = '#777';
 
-    new Chart(myChart, {
+    // prevent old data from showing
+    if(window.bar != undefined) window.bar.destroy(); 
+    
+    window.bar = new Chart(myChart, {
     type:'bar', 
     data:{
         labels: mylabels,
         datasets:[{
             label:'Motion',
             data: mydata,
-            //backgroundColor:'green',
+            borderColor: 'rgb(54, 162, 235)',
+            backgroundColor: 'rgb(254,71,103)',
             borderWidth:1,
-            borderColor:'#777',
             hoverBorderWidth:3,
             hoverBorderColor:'#000'
         }]
@@ -160,14 +163,15 @@ const createChart = (mylabels, mydata) => {
     options:{
         title:{
             display:true,
-            text:'Number of Camera Motions',
-            fontSize:25
+            text: `${chartTitle}`,
+            fontSize: 14,
+            fontColor: "#858C99",
         },
         legend:{
             display:true,
-            position:'right',
             labels:{
-                fontColor:'#000'
+                fontColor:'white',
+                fontSize: 12
             }
         },
         layout:{
@@ -186,15 +190,26 @@ const createChart = (mylabels, mydata) => {
                 {
                     ticks: {
                         display: false
-                    }
+                    },
+                    gridLines: {
+                        display: false,
+                        color: "#858C99" 
+                    },
                 }
             ],
             yAxes: [{
                 ticks: {
                   beginAtZero: true,
                   callback: function(value) {if (value % 1 === 0) {return value;}}
-                }
-              }]
+                },
+                gridLines: {
+                    display: false,
+                    color: "#858C99" 
+                },
+                labelString: 'Number of motions'
+              }
+            ],
+            
         }
     }
     });

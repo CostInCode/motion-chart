@@ -1,9 +1,16 @@
 body {
-    background-color: aliceblue;
+    background-color: #0E0F40;
+}
+
+.btn {
+    background-color: transparent;
+    color: aliceblue;
+    border-color: #ccc;
 }
 
 #reportrange {
-    background: #fff; 
+    background-color: transparent; 
+    color: aliceblue;
     cursor: pointer; 
     padding: 5px 10px; 
     border: 1px solid #ccc; 
