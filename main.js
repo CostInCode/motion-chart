@@ -27,9 +27,38 @@ $(document).ready(function () {
           
     });
 
-    $('.clockpicker').clockpicker({
+    $('.timepicker').clockpicker({
         donetext: 'Done'
     });
+
+    $('#minuteBtn').click(() => {
+        var time = $('.timepicker').val();
+        const hh = time.substr(0, 2);
+        const startDate = $('#reportrange').data('daterangepicker').startDate;
+        const y = startDate._d.getFullYear(),
+        m = startDate._d.getMonth()+1,
+        d = startDate._d.getDate();
+
+        const url = 'http://127.0.0.1:3000/motions/' + y + '/' + m + '/' + d + '/' + hh;
+        fetch(url)
+        .then((res) => res.json())
+        .then((motions) => {
+            console.log(motions);
+            let dataChart = [];
+            let labels = [];
+            for(let i = 1; i < 61; i++) {
+              //  if(i == 1 || i%5==0) 
+                    labels.push(i.toString());
+            } 
+            for(let i = 1; i < 61; i++) {
+                 const index = motions.findIndex(x => x.min == i);
+                 if(index > -1) dataChart.push(motions[index].count);
+                 else dataChart.push(0);
+            }
+            
+            createChart(labels, dataChart);
+       })
+    })
 
     /****** CLICK TO GET NR OF MOTIONS By HOUR *****/
     $('#hourBtn').click(function(){
@@ -119,38 +148,53 @@ const createChart = (mylabels, mydata) => {
     data:{
         labels: mylabels,
         datasets:[{
-        label:'Motion',
-        data: mydata,
-        //backgroundColor:'green',
-        borderWidth:1,
-        borderColor:'#777',
-        hoverBorderWidth:3,
-        hoverBorderColor:'#000'
+            label:'Motion',
+            data: mydata,
+            //backgroundColor:'green',
+            borderWidth:1,
+            borderColor:'#777',
+            hoverBorderWidth:3,
+            hoverBorderColor:'#000'
         }]
     },
     options:{
         title:{
-        display:true,
-        text:'Number of Camera Motions',
-        fontSize:25
+            display:true,
+            text:'Number of Camera Motions',
+            fontSize:25
         },
         legend:{
-        display:true,
-        position:'right',
-        labels:{
-            fontColor:'#000'
-        }
+            display:true,
+            position:'right',
+            labels:{
+                fontColor:'#000'
+            }
         },
         layout:{
-        padding:{
-            left:0,
-            right:0,
-            bottom:0,
-            top:0
-        }
+            padding:{
+                left:0,
+                right:0,
+                bottom:0,
+                top:0
+            }
         },
         tooltips:{
-        enabled:true
+            enabled:true
+        },
+        scales: {
+            xAxes: [
+                {
+                    ticks: {
+                        display: false
+                    }
+                }
+            ],
+            yAxes: [{
+                ticks: {
+                  beginAtZero: true,
+                  callback: function(value) {if (value % 1 === 0) {return value;}}
+                }
+              }]
         }
     }
     });

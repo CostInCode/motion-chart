@@ -1,3 +1,7 @@
+body {
+    background-color: aliceblue;
+}
+
 #reportrange {
     background: #fff; 
     cursor: pointer; 
