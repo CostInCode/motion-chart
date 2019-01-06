@@ -1,10 +1,9 @@
 
-
-$(document).ready(function () {
+$(document).ready(function() {
     $(function() {
                             
-        var start = moment().subtract(29, 'days');
-        var end = moment();
+        let start = moment().subtract(29, 'days');
+        let end = moment();
     
         function cb(start, end) {
             $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
@@ -32,7 +31,7 @@ $(document).ready(function () {
     });
 
     $('#minuteBtn').click(() => {
-        var time = $('.timepicker').val();
+        const time = $('.timepicker').val();
         const hh = time.substr(0, 2);
         const startDate = $('#reportrange').data('daterangepicker').startDate;
         const y = startDate._d.getFullYear(),
@@ -43,12 +42,10 @@ $(document).ready(function () {
         fetch(url)
         .then((res) => res.json())
         .then((motions) => {
-            console.log(motions);
             let dataChart = [];
             let labels = [];
             for(let i = 1; i < 61; i++) {
-              //  if(i == 1 || i%5==0) 
-                    labels.push(i.toString());
+                labels.push(i.toString());
             } 
             for(let i = 1; i < 61; i++) {
                  const index = motions.findIndex(x => x.min == i);
@@ -61,7 +58,7 @@ $(document).ready(function () {
     })
 
     /****** CLICK TO GET NR OF MOTIONS By HOUR *****/
-    $('#hourBtn').click(function(){
+    $('#hourBtn').click(function() {
         
         const startDate = $('#reportrange').data('daterangepicker').startDate;
         const y = startDate._d.getFullYear(),
@@ -85,10 +82,8 @@ $(document).ready(function () {
        })
   });
 
-
   /****** CLICK TO GET NR OF MOTIONS BETWEEN TWO DATES *****/
-
-  $('#dateBtn').click(function(){
+  $('#dateBtn').click(function() {
         
     const startDate = $('#reportrange').data('daterangepicker').startDate;
     const endDate = $('#reportrange').data('daterangepicker').endDate;
@@ -98,7 +93,6 @@ $(document).ready(function () {
           y2 = endDate._d.getFullYear(),
           m2 = endDate._d.getMonth(),
           d2 = endDate._d.getDate();
-    
     
     let dates = getDates(new Date(y1, m1, d1), new Date(y2, m2, d2));
 	let arrayDates = [];
@@ -117,12 +111,9 @@ $(document).ready(function () {
     .then((res) => res.json())
     .then((motions) => {
         let dataChart = [];
-        
         for(let i = 0; i < arrayDates.length; i++) {
             const d = arrayDates[i];
-            console.log("d: "+d);
             const dayStr = d.substr(0, d.indexOf('/'));
-            console.log("dayStr: "+dayStr);
             const index = motions.findIndex(x => x.day == dayStr);
             if(index > -1) dataChart.push(motions[index].count);
             else dataChart.push(0);
